@@ -11,40 +11,75 @@
 </div>
 
 @section Scripts {
-<script>
-    // A sample of FontAwesome 6 free solid and brand icons (add more as needed)
-    const iconList = [
-        'fa-solid fa-link', 'fa-solid fa-tachometer-alt', 'fa-solid fa-database', 'fa-solid fa-server',
-        'fa-solid fa-briefcase', 'fa-solid fa-brush', 'fa-solid fa-paint-roller', 'fa-solid fa-sun',
-        'fa-solid fa-moon', 'fa-solid fa-user', 'fa-solid fa-users', 'fa-solid fa-cog',
-        'fa-solid fa-home', 'fa-solid fa-envelope', 'fa-solid fa-phone', 'fa-solid fa-globe',
-        'fa-brands fa-github', 'fa-brands fa-microsoft', 'fa-brands fa-stack-overflow',
-        'fa-brands fa-twitter', 'fa-brands fa-facebook', 'fa-brands fa-linkedin',
-        'fa-solid fa-tachometer', 'fa-solid fa-chart-bar', 'fa-solid fa-chart-pie',
-        'fa-solid fa-chart-line', 'fa-solid fa-calendar', 'fa-solid fa-clock',
-        'fa-solid fa-check', 'fa-solid fa-times', 'fa-solid fa-edit', 'fa-solid fa-trash',
-        'fa-solid fa-plus', 'fa-solid fa-minus', 'fa-solid fa-arrow-up', 'fa-solid fa-arrow-down',
-        'fa-solid fa-arrow-left', 'fa-solid fa-arrow-right', 'fa-solid fa-search',
-        'fa-solid fa-info-circle', 'fa-solid fa-question-circle', 'fa-solid fa-exclamation-circle'
-    ];
-    function renderIconsTable() {
-        const table = document.createElement('table');
-        table.className = 'table table-bordered align-middle';
-        let row;
-        iconList.forEach((icon, idx) => {
-            if (idx % 10 === 0) {
-                row = table.insertRow(-1);
-            }
-            const cell = row.insertCell(-1);
-            cell.innerHTML = `
-                <div class="text-center" style="min-width:90px;">
-                    <i class="${icon} fa-2x mb-1"></i><br/>
-                    <span class="small">${icon}</span>
-                </div>
-            `;
-        });
-        document.getElementById('iconsTable').appendChild(table);
-    }
-    document.addEventListener('DOMContentLoaded', renderIconsTable);
-</script>
+    <script>
+        // A sample of FontAwesome 6 free solid and brand icons (add more as needed)
+        const iconList = [
+            'fa-solid fa-link', 'fa-solid fa-tachometer-alt', 'fa-solid fa-database', 'fa-solid fa-server',
+            'fa-solid fa-briefcase', 'fa-solid fa-brush', 'fa-solid fa-paint-roller', 'fa-solid fa-sun',
+            'fa-solid fa-moon', 'fa-solid fa-user', 'fa-solid fa-users', 'fa-solid fa-cog',
+            'fa-solid fa-home', 'fa-solid fa-envelope', 'fa-solid fa-phone', 'fa-solid fa-globe',
+            'fa-brands fa-github', 'fa-brands fa-microsoft', 'fa-brands fa-stack-overflow',
+            'fa-brands fa-twitter', 'fa-brands fa-facebook', 'fa-brands fa-linkedin',
+            'fa-solid fa-tachometer', 'fa-solid fa-chart-bar', 'fa-solid fa-chart-pie',
+            'fa-solid fa-chart-line', 'fa-solid fa-calendar', 'fa-solid fa-clock',
+            'fa-solid fa-check', 'fa-solid fa-times', 'fa-solid fa-edit', 'fa-solid fa-trash',
+            'fa-solid fa-plus', 'fa-solid fa-minus', 'fa-solid fa-arrow-up', 'fa-solid fa-arrow-down',
+            'fa-solid fa-arrow-left', 'fa-solid fa-arrow-right', 'fa-solid fa-search',
+            'fa-solid fa-info-circle', 'fa-solid fa-question-circle', 'fa-solid fa-exclamation-circle',
+            // Additional icons
+            'fa-solid fa-star', 'fa-solid fa-heart', 'fa-solid fa-bell', 'fa-solid fa-bolt',
+            'fa-solid fa-book', 'fa-solid fa-bookmark', 'fa-solid fa-camera', 'fa-solid fa-car',
+            'fa-solid fa-cloud', 'fa-solid fa-coffee', 'fa-solid fa-download', 'fa-solid fa-upload',
+            'fa-solid fa-eye', 'fa-solid fa-flag', 'fa-solid fa-gift', 'fa-solid fa-glass-martini',
+            'fa-solid fa-graduation-cap', 'fa-solid fa-key', 'fa-solid fa-lightbulb', 'fa-solid fa-lock',
+            'fa-solid fa-map', 'fa-solid fa-microphone', 'fa-solid fa-music', 'fa-solid fa-paperclip',
+            'fa-solid fa-print', 'fa-solid fa-reply', 'fa-solid fa-save', 'fa-solid fa-share',
+            'fa-solid fa-shield-alt', 'fa-solid fa-shopping-cart', 'fa-solid fa-sign-out-alt',
+            'fa-solid fa-sitemap', 'fa-solid fa-sliders-h', 'fa-solid fa-smile', 'fa-solid fa-spinner',
+            'fa-solid fa-stopwatch', 'fa-solid fa-sync', 'fa-solid fa-table', 'fa-solid fa-tag',
+            'fa-solid fa-thumbs-up', 'fa-solid fa-thumbs-down', 'fa-solid fa-ticket-alt',
+            'fa-solid fa-tree', 'fa-solid fa-trophy', 'fa-solid fa-unlock', 'fa-solid fa-user-circle',
+            'fa-solid fa-wifi', 'fa-brands fa-apple', 'fa-brands fa-android', 'fa-brands fa-chrome',
+            'fa-brands fa-edge', 'fa-brands fa-firefox', 'fa-brands fa-opera', 'fa-brands fa-safari',
+            'fa-brands fa-youtube', 'fa-brands fa-instagram', 'fa-brands fa-whatsapp',
+            'fa-brands fa-telegram', 'fa-brands fa-discord', 'fa-brands fa-gitlab', 'fa-brands fa-bitbucket',
+            'fa-brands fa-dropbox', 'fa-brands fa-dribbble', 'fa-brands fa-behance', 'fa-brands fa-reddit',
+            'fa-brands fa-skype', 'fa-brands fa-slack', 'fa-brands fa-tumblr', 'fa-brands fa-vimeo',
+            'fa-brands fa-wordpress', 'fa-brands fa-windows', 'fa-brands fa-linux', 'fa-brands fa-aws',
+            'fa-brands fa-docker', 'fa-brands fa-figma', 'fa-brands fa-google', 'fa-brands fa-git',
+            'fa-brands fa-facebook-messenger', 'fa-brands fa-pinterest', 'fa-brands fa-spotify',
+            'fa-brands fa-stack-exchange', 'fa-brands fa-steam', 'fa-brands fa-twitch', 'fa-brands fa-twitter-square',
+            'fa-brands fa-ubuntu', 'fa-brands fa-vk', 'fa-brands fa-xbox', 'fa-brands fa-yahoo',
+            'fa-brands fa-zoom'
+        ];
+        function renderIconsTable() {
+            const table = document.createElement('table');
+            table.className = 'table table-bordered align-middle';
+            let row;
+            iconList.forEach((icon, idx) => {
+                if (idx % 10 === 0) {
+                    row = table.insertRow(-1);
+                }
+                const cell = row.insertCell(-1);
+                cell.innerHTML = `
+                        <div class="text-center" style="min-width:90px; cursor:pointer;">
+                            <i class="${icon} fa-2x mb-1 icon-copy" data-icon="${icon}"></i><br/>
+                            <span class="small">${icon}</span>
+                        </div>
+                    `;
+            });
+            document.getElementById('iconsTable').appendChild(table);
+            // Add click event for copy
+            table.querySelectorAll('.icon-copy').forEach(iconEl => {
+                iconEl.addEventListener('click', function () {
+                    const text = this.getAttribute('data-icon');
+                    navigator.clipboard.writeText(text);
+                    this.classList.add('text-success');
+                    setTimeout(() => this.classList.remove('text-success'), 800);
+                });
+            });
+        }
+        document.addEventListener('DOMContentLoaded', renderIconsTable);
+    </script>
 }
+ 
