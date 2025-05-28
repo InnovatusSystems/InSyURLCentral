@@ -1,0 +1,39 @@
+{
+  "name": "Innovatus Systems URL Central",
+  "short_name": "URL Central",
+  "start_url": ".",
+  "display": "standalone",
+  "display_override": ["fullscreen", "minimal-ui"],
+  "background_color": "#ffffff",
+  "theme_color": "#0078d7",
+  "description": "A control panel for quick access to important URLs.",
+  "icons": [
+    {
+      "src": "/img/http_64x64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/http_512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/img/screenshot1.png",
+      "sizes": "600x700",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Main Screen"
+    },
+    {
+      "src": "/img/screenshot1.png",
+      "sizes": "600x700",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Main Screen"
+    }
+  ]
+}

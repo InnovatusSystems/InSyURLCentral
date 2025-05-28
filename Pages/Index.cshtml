@@ -1,0 +1,53 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Control Panel";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Control Panel</h2>
+        <button id="installPwaBtn" class="btn btn-primary" style="display:none;" onclick="showInstallPrompt()">Install
+            App</button>
+    </div>
+    <div id="controlPanelLinks" class="row g-3">
+        <!-- Links will be loaded here -->
+    </div>
+</div>
+
+@section Scripts {
+    @* <script src="https://kit.fontawesome.com/4e9c8e6e5b.js" crossorigin="anonymous"></script> *@
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/api/ControlPanelLinks')
+                .then(res => res.json())
+                .then(folders => {
+                    const panel = document.getElementById('controlPanelLinks');
+                    panel.innerHTML = '';
+                    folders.forEach(folder => {
+                        // Folder header
+                        const folderHeader = document.createElement('div');
+                        folderHeader.className = 'col-12 mt-4';
+                        folderHeader.innerHTML = `
+                                <h4><i class="${folder.icon} me-2"></i>${folder.name}</h4>
+                            `;
+                        panel.appendChild(folderHeader);
+                        // Folder links
+                        folder.links.forEach(link => {
+                            const col = document.createElement('div');
+                            col.className = 'col-12 col-md-4 col-lg-3';
+                            col.innerHTML = `
+                                    <a href="${link.url}" class="card text-center h-100 shadow-sm text-decoration-none" target="_blank">
+                                        <div class="card-body">
+                                            <i class="${link.icon} fa-2x mb-2"></i>
+                                            <div class="fw-bold">${link.title}</div>
+                                        </div>
+                                    </a>
+                                `;
+                            panel.appendChild(col);
+                        });
+                    });
+                });
+        });
+    </script>
+}

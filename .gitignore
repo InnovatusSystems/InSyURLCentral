@@ -1,0 +1,80 @@
+# .gitignore for Visual Studio, VS Code, and .NET projects
+
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code settings
+.vscode/
+
+# Rider settings
+.idea/
+*.sln.iml
+
+# Visual Studio Code Workspace
+*.code-workspace
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# DotCover
+*.dotCover
+
+# NCrunch
+*.ncrunch*
+.*crunch*.local.xml
+
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+# IIS Express
+.vs/
+/.vs/
+
+# Others
+*.dbmdl
+*.bak
+*.log
+*.vspscc
+*.vssscc
+*.tmp
+*.cache
+*.pdb
+*.mdb
+*.opendb
+*.pidb
+*.svclog
+*.scc
+*.orig
+*.sdf
+*.suo
+*.userprefs
+*.userosscache
+*.sln.docstates
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper*
+
+# Dotnet watch
+**/node_modules/
+
+# Publish output
+bin/Publish/
+
+# npm package
+package-lock.json
+yarn.lock
+
+# OS generated files
+.DS_Store
+Thumbs.db

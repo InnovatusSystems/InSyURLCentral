@@ -1,0 +1,3 @@
+<!-- Use this file to provide workspace-specific custom instructions to Copilot. For more details, visit https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->
+
+This project is an ASP.NET Core web application (Razor Pages) with a single-page control panel UI. The backend serves a list of URLs from appsettings.json via a controller. The frontend is a PWA with manifest.json, install prompt handling, and standalone launch mode. Prioritize clean separation of backend and frontend logic, and follow best practices for PWA and ASP.NET Core development.
