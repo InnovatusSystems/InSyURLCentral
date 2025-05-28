@@ -11,7 +11,11 @@ obj/
 *.sln.docstates
 
 # VS Code settings
-.vscode/
+.vscode/**/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
 # Rider settings
 .idea/

@@ -1,0 +1,37 @@
+{
+  // See https://go.microsoft.com/fwlink/?linkid=830387 for more about tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["build", "${workspaceFolder}/InSyURLCentral.csproj"],
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "clean",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["clean", "${workspaceFolder}/InSyURLCentral.csproj"],
+      "group": "build"
+    },
+    {
+      "label": "publish",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["publish", "${workspaceFolder}/InSyURLCentral.csproj", "-c", "Release", "-o", "${workspaceFolder}/bin/Publish"],
+      "group": "build"
+    },
+    {
+      "label": "run",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["watch", "run", "--project", "${workspaceFolder}/InSyURLCentral.csproj"],
+      "dependsOn": ["build"],
+      "problemMatcher": "$msCompile",
+      "group": "test"
+    }
+  ]
+}
