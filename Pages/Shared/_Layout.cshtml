@@ -14,6 +14,31 @@
     <link rel="stylesheet" href="~/InSyURLCentral.styles.css" asp-append-version="true" />
     <link rel="manifest" href="~/manifest.json">
     <meta name="theme-color" content="#0078d7">
+    <style>
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1030;
+        }
+
+        .main-content-container {
+            padding-top: 80px;
+            /* Adjust based on header height */
+            padding-bottom: 60px;
+            /* Adjust based on footer height */
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1030;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -42,12 +67,11 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container main-content-container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2025 - Innovatus Systems - <a asp-area="" asp-page="/Privacy">Privacy</a>
