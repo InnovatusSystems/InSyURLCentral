@@ -19,6 +19,8 @@
                     <th>Link Title</th>
                     <th>Link URL</th>
                     <th>Link Icon</th>
+                    <th>Status URL</th>
+                    <th>Match Phrase</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -69,16 +71,18 @@
             rows.forEach((row, idx) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                        <td><input class="form-control" value="${row.name}" data-field="name" data-idx="${idx}" /></td>
-                        <td><input class="form-control" value="${row.icon}" data-field="icon" data-idx="${idx}" /></td>
-                        <td><input class="form-control" value="${row.title}" data-field="title" data-idx="${idx}" /></td>
-                        <td><input class="form-control" value="${row.url}" data-field="url" data-idx="${idx}" /></td>
-                        <td><input class="form-control" value="${row.linkIcon}" data-field="linkIcon" data-idx="${idx}" /></td>
-                        <td>
-                            <button class="btn btn-primary btn-sm me-1" onclick="saveRow(${idx})">Save</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteRow(${idx})">Delete</button>
-                        </td>
-                    `;
+                <td><input class="form-control" value="${row.name || ''}" data-field="name" data-idx="${idx}" /></td>
+                <td><input class="form-control" value="${row.icon || ''}" data-field="icon" data-idx="${idx}" /></td>
+                <td><input class="form-control" value="${row.title || ''}" data-field="title" data-idx="${idx}" /></td>
+                <td><input class="form-control" value="${row.url || ''}" data-field="url" data-idx="${idx}" /></td>
+                <td><input class="form-control" value="${row.linkIcon || ''}" data-field="linkIcon" data-idx="${idx}" /></td>
+                <td><input class="form-control" value="${row.statusUrl || ''}" data-field="statusUrl" data-idx="${idx}" /></td>
+                <td><input class="form-control" value="${row.matchPhrase || ''}" data-field="matchPhrase" data-idx="${idx}" /></td>
+                <td>
+                    <button class="btn btn-primary btn-sm me-1" onclick="saveRow(${idx})">Save</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteRow(${idx})">Delete</button>
+                </td>
+            `;
                 tbody.appendChild(tr);
             });
         }
@@ -87,16 +91,18 @@
             const idx = tbody.children.length;
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                    <td><input class="form-control" data-field="name" data-idx="${idx}" /></td>
-                    <td><input class="form-control" data-field="icon" data-idx="${idx}" /></td>
-                    <td><input class="form-control" data-field="title" data-idx="${idx}" /></td>
-                    <td><input class="form-control" data-field="url" data-idx="${idx}" /></td>
-                    <td><input class="form-control" data-field="linkIcon" data-idx="${idx}" /></td>
-                    <td>
-                        <button class="btn btn-success btn-sm me-1" onclick="addRow(this)">Add</button>
-                        <button class="btn btn-secondary btn-sm" onclick="this.closest('tr').remove()">Cancel</button>
-                    </td>
-                `;
+            <td><input class="form-control" data-field="name" data-idx="${idx}" /></td>
+            <td><input class="form-control" data-field="icon" data-idx="${idx}" /></td>
+            <td><input class="form-control" data-field="title" data-idx="${idx}" /></td>
+            <td><input class="form-control" data-field="url" data-idx="${idx}" /></td>
+            <td><input class="form-control" data-field="linkIcon" data-idx="${idx}" /></td>
+            <td><input class="form-control" data-field="statusUrl" data-idx="${idx}" /></td>
+            <td><input class="form-control" data-field="matchPhrase" data-idx="${idx}" /></td>
+            <td>
+                <button class="btn btn-success btn-sm me-1" onclick="addRow(this)">Add</button>
+                <button class="btn btn-secondary btn-sm" onclick="this.closest('tr').remove()">Cancel</button>
+            </td>
+        `;
             tbody.appendChild(tr);
         }
         function addRow(btn) {
