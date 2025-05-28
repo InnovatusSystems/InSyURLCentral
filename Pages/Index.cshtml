@@ -36,15 +36,42 @@
                         folder.links.forEach(link => {
                             const col = document.createElement('div');
                             col.className = 'col-12 col-md-4 col-lg-3';
+                            let statusIconHtml = '';
+                            if (link.statusUrl && link.statusUrl.startsWith('http')) {
+                                statusIconHtml = `<span class="ms-2"><i class="fa-solid fa-spinner fa-spin text-secondary" title="Checking status..."></i></span>`;
+                            }
                             col.innerHTML = `
-                                    <a href="${link.url}" class="card text-center h-100 shadow-sm text-decoration-none" target="_blank">
-                                        <div class="card-body">
-                                            <i class="${link.icon} fa-2x mb-2"></i>
-                                            <div class="fw-bold">${link.title}</div>
-                                        </div>
-                                    </a>
-                                `;
+                                <a href="${link.url}" class="card text-center h-100 shadow-sm text-decoration-none" target="_blank">
+                                    <div class="card-body">
+                                        <i class="${link.icon} fa-2x mb-2"></i>
+                                        <span class="status-icon">${statusIconHtml}</span>
+                                        <div class="fw-bold">${link.title}</div>
+                                    </div>
+                                </a>
+                            `;
                             panel.appendChild(col);
+                            // If statusUrl, check status async
+                            if (link.statusUrl && link.statusUrl.startsWith('http')) {
+                                const statusIconSpan = col.querySelector('.status-icon');
+                                fetch(link.statusUrl)
+                                    .then(resp => resp.text().then(txt => ({ ok: resp.ok, text: txt })))
+                                    .then(({ ok, text }) => {
+                                        let match = false;
+                                        if (link.matchPhrase && link.matchPhrase.trim()) {
+                                            const phrases = link.matchPhrase.split(',').map(p => p.trim()).filter(Boolean);
+                                            match = phrases.some(phrase => text.includes(phrase));
+                                        }
+                                        if (!ok || match) {
+                                            statusIconSpan.innerHTML = '<i class="fa-solid fa-thumbs-down text-danger" title="Status check failed or phrase matched"></i>';
+                                        } else {
+                                            statusIconSpan.innerHTML = '<i class="fa-solid fa-thumbs-up text-success" title="Status OK"></i>';
+                                        }
+                                    })
+                                    .catch(() => {
+                                        const statusIconSpan = col.querySelector('.status-icon');
+                                        statusIconSpan.innerHTML = '<i class="fa-solid fa-thumbs-down text-danger" title="Status check failed"></i>';
+                                    });
+                            }
                         });
                     });
                 });
