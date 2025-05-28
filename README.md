@@ -1,10 +1,10 @@
 # InSyURLCentral
 
-A single-page ASP.NET Core Razor Pages web application that serves as a control panel for quick access to important URLs. The backend exposes a GET API to serve the list of URLs from `appsettings.json`. The frontend is a Progressive Web App (PWA) with install support and standalone launch mode.
+A web application that serves as a control panel for quick access to important URLs. The backend exposes a GET API to serve the list of URLs from a CSV file. The frontend is a Progressive Web App (PWA) with install support and standalone launch mode.
 
 ## Features
 - Control panel UI with clickable links and icons
-- URLs and icons are configured in `appsettings.json`
+- URLs and icons are configured in CSV file
 - Backend API endpoint: `/api/ControlPanelLinks`
 - PWA: installable on mobile/desktop, standalone mode, manifest.json, service worker
 - Install prompt handling with a generic message
@@ -20,7 +20,7 @@ A single-page ASP.NET Core Razor Pages web application that serves as a control 
    Use the "Install App" button or your browser's install option
 
 ## Configuration
-- Edit `appsettings.json` to change the list of URLs and icons.
+- Edit the CSV file to change the list of URLs and icons.
 
 ## Project Structure
 - `Controllers/ControlPanelLinksController.cs`: API controller for URLs
@@ -30,4 +30,4 @@ A single-page ASP.NET Core Razor Pages web application that serves as a control 
 
 ---
 
-© 2025 InSyURLCentral
+© 2025 Innovatus Systems
