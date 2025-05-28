@@ -8,6 +8,7 @@
     <h2>Manage Control Panel Links</h2>
     <div class="mb-3">
         <button class="btn btn-success" onclick="showAddRow()">Add New Link</button>
+        <a class="btn btn-secondary ms-2" href="/Icons" target="_blank">Browse Icons</a>
     </div>
     <div class="table-responsive">
         <table class="table table-bordered align-middle" id="linksTable">
@@ -28,75 +29,115 @@
     </div>
 </div>
 
+<div id="toast" class="toast align-items-center text-bg-primary border-0 position-fixed bottom-0 end-0 m-4" role="alert"
+    aria-live="assertive" aria-atomic="true" style="z-index: 9999; display:none; min-width: 200px;">
+    <div class="d-flex">
+        <div class="toast-body" id="toastBody">
+            <!-- Toast message here -->
+        </div>
+    </div>
+</div>
+<div id="spinnerOverlay"
+    style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(255,255,255,0.5); z-index:9998; align-items:center; justify-content:center;">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
 @section Scripts {
-<script>
-    function fetchLinks() {
-        fetch('/api/ControlPanelLinks/all')
-            .then(res => res.json())
-            .then(data => renderTable(data));
-    }
-    function renderTable(rows) {
-        const tbody = document.querySelector('#linksTable tbody');
-        tbody.innerHTML = '';
-        rows.forEach((row, idx) => {
+    <script>
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastBody = document.getElementById('toastBody');
+            toastBody.textContent = message;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2500);
+        }
+        function showSpinner(show) {
+            document.getElementById('spinnerOverlay').style.display = show ? 'flex' : 'none';
+        }
+        function fetchLinks() {
+            showSpinner(true);
+            fetch('/api/ControlPanelLinks/all')
+                .then(res => res.json())
+                .then(data => renderTable(data))
+                .finally(() => showSpinner(false));
+        }
+        function renderTable(rows) {
+            const tbody = document.querySelector('#linksTable tbody');
+            tbody.innerHTML = '';
+            rows.forEach((row, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                        <td><input class="form-control" value="${row.name}" data-field="name" data-idx="${idx}" /></td>
+                        <td><input class="form-control" value="${row.icon}" data-field="icon" data-idx="${idx}" /></td>
+                        <td><input class="form-control" value="${row.title}" data-field="title" data-idx="${idx}" /></td>
+                        <td><input class="form-control" value="${row.url}" data-field="url" data-idx="${idx}" /></td>
+                        <td><input class="form-control" value="${row.linkIcon}" data-field="linkIcon" data-idx="${idx}" /></td>
+                        <td>
+                            <button class="btn btn-primary btn-sm me-1" onclick="saveRow(${idx})">Save</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteRow(${idx})">Delete</button>
+                        </td>
+                    `;
+                tbody.appendChild(tr);
+            });
+        }
+        function showAddRow() {
+            const tbody = document.querySelector('#linksTable tbody');
+            const idx = tbody.children.length;
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td><input class="form-control" value="${row.name}" data-field="name" data-idx="${idx}" /></td>
-                <td><input class="form-control" value="${row.icon}" data-field="icon" data-idx="${idx}" /></td>
-                <td><input class="form-control" value="${row.title}" data-field="title" data-idx="${idx}" /></td>
-                <td><input class="form-control" value="${row.url}" data-field="url" data-idx="${idx}" /></td>
-                <td><input class="form-control" value="${row.linkIcon}" data-field="linkIcon" data-idx="${idx}" /></td>
-                <td>
-                    <button class="btn btn-primary btn-sm me-1" onclick="saveRow(${idx})">Save</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteRow(${idx})">Delete</button>
-                </td>
-            `;
+                    <td><input class="form-control" data-field="name" data-idx="${idx}" /></td>
+                    <td><input class="form-control" data-field="icon" data-idx="${idx}" /></td>
+                    <td><input class="form-control" data-field="title" data-idx="${idx}" /></td>
+                    <td><input class="form-control" data-field="url" data-idx="${idx}" /></td>
+                    <td><input class="form-control" data-field="linkIcon" data-idx="${idx}" /></td>
+                    <td>
+                        <button class="btn btn-success btn-sm me-1" onclick="addRow(this)">Add</button>
+                        <button class="btn btn-secondary btn-sm" onclick="this.closest('tr').remove()">Cancel</button>
+                    </td>
+                `;
             tbody.appendChild(tr);
-        });
-    }
-    function showAddRow() {
-        const tbody = document.querySelector('#linksTable tbody');
-        const idx = tbody.children.length;
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td><input class="form-control" data-field="name" data-idx="${idx}" /></td>
-            <td><input class="form-control" data-field="icon" data-idx="${idx}" /></td>
-            <td><input class="form-control" data-field="title" data-idx="${idx}" /></td>
-            <td><input class="form-control" data-field="url" data-idx="${idx}" /></td>
-            <td><input class="form-control" data-field="linkIcon" data-idx="${idx}" /></td>
-            <td>
-                <button class="btn btn-success btn-sm me-1" onclick="addRow(this)">Add</button>
-                <button class="btn btn-secondary btn-sm" onclick="this.closest('tr').remove()">Cancel</button>
-            </td>
-        `;
-        tbody.appendChild(tr);
-    }
-    function addRow(btn) {
-        const tr = btn.closest('tr');
-        const inputs = tr.querySelectorAll('input');
-        const row = {};
-        inputs.forEach(input => row[input.dataset.field] = input.value);
-        fetch('/api/ControlPanelLinks', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(row)
-        }).then(() => fetchLinks());
-    }
-    function saveRow(idx) {
-        const inputs = document.querySelectorAll(`input[data-idx='${idx}']`);
-        const row = {};
-        inputs.forEach(input => row[input.dataset.field] = input.value);
-        fetch(`/api/ControlPanelLinks/${idx}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(row)
-        }).then(() => fetchLinks());
-    }
-    function deleteRow(idx) {
-        if (!confirm('Delete this link?')) return;
-        fetch(`/api/ControlPanelLinks/${idx}`, { method: 'DELETE' })
-            .then(() => fetchLinks());
-    }
-    document.addEventListener('DOMContentLoaded', fetchLinks);
-</script>
+        }
+        function addRow(btn) {
+            const tr = btn.closest('tr');
+            const inputs = tr.querySelectorAll('input');
+            const row = {};
+            inputs.forEach(input => row[input.dataset.field] = input.value);
+            showSpinner(true);
+            fetch('/api/ControlPanelLinks', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(row)
+            }).then(() => {
+                showToast('Link added');
+                fetchLinks();
+            }).finally(() => showSpinner(false));
+        }
+        function saveRow(idx) {
+            const inputs = document.querySelectorAll(`input[data-idx='${idx}']`);
+            const row = {};
+            inputs.forEach(input => row[input.dataset.field] = input.value);
+            showSpinner(true);
+            fetch(`/api/ControlPanelLinks/${idx}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(row)
+            }).then(() => {
+                showToast('Link updated');
+                fetchLinks();
+            }).finally(() => showSpinner(false));
+        }
+        function deleteRow(idx) {
+            if (!confirm('Delete this link?')) return;
+            showSpinner(true);
+            fetch(`/api/ControlPanelLinks/${idx}`, { method: 'DELETE' })
+                .then(() => {
+                    showToast('Link deleted');
+                    fetchLinks();
+                })
+                .finally(() => showSpinner(false));
+        }
+        document.addEventListener('DOMContentLoaded', fetchLinks);
+    </script>
 }

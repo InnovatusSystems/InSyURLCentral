@@ -1,0 +1,50 @@
+@page
+@model IconsModel
+@{
+    ViewData["Title"] = "FontAwesome Icons Reference";
+}
+
+<div class="container py-4">
+    <h2>FontAwesome Icons Reference</h2>
+    <div class="mb-3">Browse and copy the class name for use in your links.</div>
+    <div id="iconsTable" class="table-responsive"></div>
+</div>
+
+@section Scripts {
+<script>
+    // A sample of FontAwesome 6 free solid and brand icons (add more as needed)
+    const iconList = [
+        'fa-solid fa-link', 'fa-solid fa-tachometer-alt', 'fa-solid fa-database', 'fa-solid fa-server',
+        'fa-solid fa-briefcase', 'fa-solid fa-brush', 'fa-solid fa-paint-roller', 'fa-solid fa-sun',
+        'fa-solid fa-moon', 'fa-solid fa-user', 'fa-solid fa-users', 'fa-solid fa-cog',
+        'fa-solid fa-home', 'fa-solid fa-envelope', 'fa-solid fa-phone', 'fa-solid fa-globe',
+        'fa-brands fa-github', 'fa-brands fa-microsoft', 'fa-brands fa-stack-overflow',
+        'fa-brands fa-twitter', 'fa-brands fa-facebook', 'fa-brands fa-linkedin',
+        'fa-solid fa-tachometer', 'fa-solid fa-chart-bar', 'fa-solid fa-chart-pie',
+        'fa-solid fa-chart-line', 'fa-solid fa-calendar', 'fa-solid fa-clock',
+        'fa-solid fa-check', 'fa-solid fa-times', 'fa-solid fa-edit', 'fa-solid fa-trash',
+        'fa-solid fa-plus', 'fa-solid fa-minus', 'fa-solid fa-arrow-up', 'fa-solid fa-arrow-down',
+        'fa-solid fa-arrow-left', 'fa-solid fa-arrow-right', 'fa-solid fa-search',
+        'fa-solid fa-info-circle', 'fa-solid fa-question-circle', 'fa-solid fa-exclamation-circle'
+    ];
+    function renderIconsTable() {
+        const table = document.createElement('table');
+        table.className = 'table table-bordered align-middle';
+        let row;
+        iconList.forEach((icon, idx) => {
+            if (idx % 10 === 0) {
+                row = table.insertRow(-1);
+            }
+            const cell = row.insertCell(-1);
+            cell.innerHTML = `
+                <div class="text-center" style="min-width:90px;">
+                    <i class="${icon} fa-2x mb-1"></i><br/>
+                    <span class="small">${icon}</span>
+                </div>
+            `;
+        });
+        document.getElementById('iconsTable').appendChild(table);
+    }
+    document.addEventListener('DOMContentLoaded', renderIconsTable);
+</script>
+}
