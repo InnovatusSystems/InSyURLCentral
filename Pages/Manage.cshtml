@@ -1,0 +1,102 @@
+@page
+@model ManageModel
+@{
+    ViewData["Title"] = "Manage Control Panel Links";
+}
+
+<div class="container py-4">
+    <h2>Manage Control Panel Links</h2>
+    <div class="mb-3">
+        <button class="btn btn-success" onclick="showAddRow()">Add New Link</button>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle" id="linksTable">
+            <thead class="table-light">
+                <tr>
+                    <th>Folder Name</th>
+                    <th>Folder Icon</th>
+                    <th>Link Title</th>
+                    <th>Link URL</th>
+                    <th>Link Icon</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be loaded here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    function fetchLinks() {
+        fetch('/api/ControlPanelLinks/all')
+            .then(res => res.json())
+            .then(data => renderTable(data));
+    }
+    function renderTable(rows) {
+        const tbody = document.querySelector('#linksTable tbody');
+        tbody.innerHTML = '';
+        rows.forEach((row, idx) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input class="form-control" value="${row.name}" data-field="name" data-idx="${idx}" /></td>
+                <td><input class="form-control" value="${row.icon}" data-field="icon" data-idx="${idx}" /></td>
+                <td><input class="form-control" value="${row.title}" data-field="title" data-idx="${idx}" /></td>
+                <td><input class="form-control" value="${row.url}" data-field="url" data-idx="${idx}" /></td>
+                <td><input class="form-control" value="${row.linkIcon}" data-field="linkIcon" data-idx="${idx}" /></td>
+                <td>
+                    <button class="btn btn-primary btn-sm me-1" onclick="saveRow(${idx})">Save</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteRow(${idx})">Delete</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+    function showAddRow() {
+        const tbody = document.querySelector('#linksTable tbody');
+        const idx = tbody.children.length;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><input class="form-control" data-field="name" data-idx="${idx}" /></td>
+            <td><input class="form-control" data-field="icon" data-idx="${idx}" /></td>
+            <td><input class="form-control" data-field="title" data-idx="${idx}" /></td>
+            <td><input class="form-control" data-field="url" data-idx="${idx}" /></td>
+            <td><input class="form-control" data-field="linkIcon" data-idx="${idx}" /></td>
+            <td>
+                <button class="btn btn-success btn-sm me-1" onclick="addRow(this)">Add</button>
+                <button class="btn btn-secondary btn-sm" onclick="this.closest('tr').remove()">Cancel</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    }
+    function addRow(btn) {
+        const tr = btn.closest('tr');
+        const inputs = tr.querySelectorAll('input');
+        const row = {};
+        inputs.forEach(input => row[input.dataset.field] = input.value);
+        fetch('/api/ControlPanelLinks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(row)
+        }).then(() => fetchLinks());
+    }
+    function saveRow(idx) {
+        const inputs = document.querySelectorAll(`input[data-idx='${idx}']`);
+        const row = {};
+        inputs.forEach(input => row[input.dataset.field] = input.value);
+        fetch(`/api/ControlPanelLinks/${idx}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(row)
+        }).then(() => fetchLinks());
+    }
+    function deleteRow(idx) {
+        if (!confirm('Delete this link?')) return;
+        fetch(`/api/ControlPanelLinks/${idx}`, { method: 'DELETE' })
+            .then(() => fetchLinks());
+    }
+    document.addEventListener('DOMContentLoaded', fetchLinks);
+</script>
+}
