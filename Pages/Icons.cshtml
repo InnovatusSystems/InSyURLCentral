@@ -6,7 +6,8 @@
 
 <div class="container py-4">
     <h2>FontAwesome Icons Reference</h2>
-    <div class="mb-3">Browse and copy the class name for use in your links.</div>
+    <div>Browse and copy the class name for use in your links.</div>
+    <div class="mb-3"><small>Tap icon image to copy to clipboard.</small></div>
     <div id="iconsTable" class="table-responsive"></div>
 </div>
 
@@ -62,11 +63,11 @@
                 }
                 const cell = row.insertCell(-1);
                 cell.innerHTML = `
-                        <div class="text-center" style="min-width:90px; cursor:pointer;">
-                            <i class="${icon} fa-2x mb-1 icon-copy" data-icon="${icon}"></i><br/>
-                            <span class="small">${icon}</span>
-                        </div>
-                    `;
+                        <div class="text-center icon-copy" data-icon="${icon}" style="min-width:90px; cursor:pointer;">
+                             <i class="${icon} fa-2x mb-1"></i><br/>
+                              <span class="small">${icon}</span>
+                           </div>
+                       `;
             });
             document.getElementById('iconsTable').appendChild(table);
             // Add click event for copy
@@ -82,4 +83,3 @@
         document.addEventListener('DOMContentLoaded', renderIconsTable);
     </script>
 }
- 
