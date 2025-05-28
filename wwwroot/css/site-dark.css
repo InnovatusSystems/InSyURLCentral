@@ -24,3 +24,7 @@ body.dark-mode {
     background-color: #444 !important;
     color: #fff !important;
 }
+
+.status-icon{
+  float: right;
+}

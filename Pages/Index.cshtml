@@ -54,12 +54,12 @@
                             if (link.statusUrl && link.statusUrl.startsWith('http')) {
                                 const statusIconSpan = col.querySelector('.status-icon');
                                 fetch(link.statusUrl)
-                                    .then(resp => resp.text().then(txt => ({ ok: resp.ok, text: txt })))
+                                    .then(resp => resp.json().then(txt => ({ ok: resp.ok, text: txt })))
                                     .then(({ ok, text }) => {
                                         let match = false;
                                         if (link.matchPhrase && link.matchPhrase.trim()) {
                                             const phrases = link.matchPhrase.split(',').map(p => p.trim()).filter(Boolean);
-                                            match = phrases.some(phrase => text.includes(phrase));
+                                            match = phrases.some(phrase => text && text.includes(phrase));
                                         }
                                         if (!ok || match) {
                                             statusIconSpan.innerHTML = '<i class="fa-solid fa-thumbs-down text-danger" title="Status check failed or phrase matched"></i>';

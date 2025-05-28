@@ -1,5 +1,5 @@
 Name,Icon,Title,Url,LinkIcon
-Dashboard,fas fa-tachometer-alt,Server Health (bincrm.com),https://tinyurl.com/MyInSyDB,fas fa-database,https://111.118.188.128/api/dbstatus,Down
+Dashboard,fas fa-tachometer-alt,Server Health (bincrm.com),https://insy.cloudns.asia/index2.html,fas fa-database,https://cors-anywhere.herokuapp.com/https://insy.cloudns.asia/api/dbstatus,Down
 Dashboard,fas fa-tachometer-alt,Server Health (AN),https://tinyurl.com/MyInSyAN,fas fa-server,https://49.50.68.207/api/dbstatus,Down
 Productivity,fas fa-briefcase,MyViz,https://www.colourmyspace.co.in/MyVizKN/,fas fa-brush
 Productivity,fas fa-briefcase,CW,https://coloursgalore.com/ColourWizard/,fas fa-paint-roller
