@@ -90,8 +90,8 @@
         // Dark mode toggle logic
         const themeCss = document.getElementById('theme-css');
         const darkModeToggle = document.getElementById('darkModeToggle');
-        const darkCssHref = '/css/site-dark.css';
-        const lightCssHref = '/css/site.css';
+        const darkCssHref = './css/site-dark.css';
+        const lightCssHref = './css/site.css';
         function setTheme(isDark) {
             themeCss.href = isDark ? darkCssHref : lightCssHref;
             document.body.classList.toggle('dark-mode', isDark);

@@ -19,7 +19,7 @@
     @* <script src="https://kit.fontawesome.com/4e9c8e6e5b.js" crossorigin="anonymous"></script> *@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            fetch('/api/ControlPanelLinks')
+            fetch('./api/ControlPanelLinks')
                 .then(res => res.json())
                 .then(folders => {
                     const panel = document.getElementById('controlPanelLinks');

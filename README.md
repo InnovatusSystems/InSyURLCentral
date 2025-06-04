@@ -5,7 +5,7 @@ A web application that serves as a control panel for quick access to important U
 ## Features
 - Control panel UI with clickable links and icons
 - URLs and icons are configured in CSV file
-- Backend API endpoint: `/api/ControlPanelLinks`
+- Backend API endpoint: `./api/ControlPanelLinks`
 - PWA: installable on mobile/desktop, standalone mode, manifest.json, service worker
 - Install prompt handling with a generic message
 

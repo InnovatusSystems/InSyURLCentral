@@ -60,7 +60,7 @@
         }
         function fetchLinks() {
             showSpinner(true);
-            fetch('/api/ControlPanelLinks/all')
+            fetch('./api/ControlPanelLinks/all')
                 .then(res => res.json())
                 .then(data => renderTable(data))
                 .finally(() => showSpinner(false));
@@ -111,7 +111,7 @@
             const row = {};
             inputs.forEach(input => row[input.dataset.field] = input.value);
             showSpinner(true);
-            fetch('/api/ControlPanelLinks', {
+            fetch('./api/ControlPanelLinks', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(row)
@@ -125,7 +125,7 @@
             const row = {};
             inputs.forEach(input => row[input.dataset.field] = input.value);
             showSpinner(true);
-            fetch(`/api/ControlPanelLinks/${idx}`, {
+            fetch(`./api/ControlPanelLinks/${idx}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(row)
@@ -137,7 +137,7 @@
         function deleteRow(idx) {
             if (!confirm('Delete this link?')) return;
             showSpinner(true);
-            fetch(`/api/ControlPanelLinks/${idx}`, { method: 'DELETE' })
+            fetch(`./api/ControlPanelLinks/${idx}`, { method: 'DELETE' })
                 .then(() => {
                     showToast('Link deleted');
                     fetchLinks();

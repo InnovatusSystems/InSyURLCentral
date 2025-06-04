@@ -9,12 +9,12 @@
   "description": "A control panel for quick access to important URLs.",
   "icons": [
     {
-      "src": "/img/http_64x64.png",
+      "src": "/Dashboard/img/http_64x64.png",
       "sizes": "64x64",
       "type": "image/png"
     },
     {
-      "src": "/img/http_512x512.png",
+      "src": "/Dashboard/img/http_512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
@@ -22,14 +22,14 @@
   ],
   "screenshots": [
     {
-      "src": "/img/screenshot1.png",
+      "src": "/Dashboard/img/screenshot1.png",
       "sizes": "600x700",
       "type": "image/png",
       "form_factor": "wide",
       "label": "Main Screen"
     },
     {
-      "src": "/img/screenshot1.png",
+      "src": "/Dashboard/img/screenshot1.png",
       "sizes": "600x700",
       "type": "image/png",
       "form_factor": "narrow",
