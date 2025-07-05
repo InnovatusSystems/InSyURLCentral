@@ -124,6 +124,37 @@ namespace InSyURLCentral.Controllers
             return Ok();
         }
 
+        [HttpGet("fetch")]
+        public async Task<IActionResult> FetchUrl([FromQuery] string url)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+                return BadRequest("Failed : URL parameter is required");
+            if (!Uri.TryCreate(url, UriKind.Absolute, out var uri) || (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
+                return BadRequest("Failed : Invalid URL");
+            try
+            {
+                using var httpClient = new HttpClient
+                {
+                    Timeout = TimeSpan.FromSeconds(10)
+                };
+                using var response = await httpClient.GetAsync(uri);
+                var content = await response.Content.ReadAsStringAsync();
+                return Content(content, response.Content.Headers.ContentType?.ToString() ?? "text/plain");
+            }
+            catch (TaskCanceledException)
+            {
+                return BadRequest("Failed : Request timed out");
+            }
+            catch (HttpRequestException ex)
+            {
+                return BadRequest($"Failed : {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed : {ex.Message}");
+            }
+        }
+
         public class ControlPanelFolder
         {
             public string Name { get; set; } = string.Empty;

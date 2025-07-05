@@ -53,8 +53,8 @@
                             // If statusUrl, check status async
                             if (link.statusUrl && link.statusUrl.startsWith('http')) {
                                 const statusIconSpan = col.querySelector('.status-icon');
-                                fetch(link.statusUrl)
-                                    .then(resp => resp.json().then(txt => ({ ok: resp.ok, text: txt })))
+                                fetch(`./api/ControlPanelLinks/fetch?url=${encodeURIComponent(link.statusUrl)}`)
+                                    .then(resp => resp.text().then(txt => ({ ok: resp.ok, text: txt })))
                                     .then(({ ok, text }) => {
                                         let match = false;
                                         if (link.matchPhrase && link.matchPhrase.trim()) {
