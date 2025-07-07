@@ -79,11 +79,20 @@
                 <td><input class="form-control" value="${row.statusUrl || ''}" data-field="statusUrl" data-idx="${idx}" /></td>
                 <td><input class="form-control" value="${row.matchPhrase || ''}" data-field="matchPhrase" data-idx="${idx}" /></td>
                 <td>
-                    <button class="btn btn-primary btn-sm me-1" onclick="saveRow(${idx})">Save</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteRow(${idx})">Delete</button>
+                    <button class="btn btn-primary btn-sm me-1 save-btn" onclick="saveRow(${idx})" id="saveBtn${idx}" title="Save"><i class="fa-solid fa-floppy-disk"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteRow(${idx})" title="Delete"><i class="fa-solid fa-trash"></i></button>
                 </td>
             `;
                 tbody.appendChild(tr);
+                // Add change detection for inputs in this row
+                const inputs = tr.querySelectorAll('input');
+                const saveBtn = tr.querySelector('.save-btn');
+                inputs.forEach(input => {
+                    input.addEventListener('input', () => {
+                        saveBtn.classList.remove('btn-primary');
+                        saveBtn.classList.add('btn-success');
+                    });
+                });
             });
         }
         function showAddRow() {
