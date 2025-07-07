@@ -124,6 +124,23 @@
             </td>
         `;
             tbody.appendChild(tr);
+            // Auto-populate icon when folder name is entered
+            const nameInput = tr.querySelector('input[data-field="name"]');
+            const iconInput = tr.querySelector('input[data-field="icon"]');
+            nameInput.addEventListener('input', function () {
+                // Find first matching row.name in the table and set icon
+                const allRows = Array.from(document.querySelectorAll('#linksTable tbody tr'));
+                let foundIcon = '';
+                for (const rowEl of allRows) {
+                    const n = rowEl.querySelector('input[data-field="name"]');
+                    const i = rowEl.querySelector('input[data-field="icon"]');
+                    if (n && i && n.value.trim() && n !== nameInput && n.value.trim() === nameInput.value.trim()) {
+                        foundIcon = i.value;
+                        break;
+                    }
+                }
+                if (foundIcon) iconInput.value = foundIcon;
+            });
         }
         function addRow(btn) {
             const tr = btn.closest('tr');
