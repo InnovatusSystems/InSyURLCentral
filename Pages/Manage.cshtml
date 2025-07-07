@@ -68,22 +68,33 @@
         function renderTable(rows) {
             const tbody = document.querySelector('#linksTable tbody');
             tbody.innerHTML = '';
+            // Collect distinct folder names
+            const folderNames = Array.from(new Set(rows.map(r => r.name).filter(Boolean)));
             rows.forEach((row, idx) => {
                 const tr = document.createElement('tr');
+                // Folder Name as datalist-enabled input
+                const folderNameOptions = folderNames.map(name => `<option value="${name}"></option>`).join('');
                 tr.innerHTML = `
-                <td><input class="form-control" value="${row.name || ''}" data-field="name" data-idx="${idx}" /></td>
+                <td><input class="form-control" list="folderNameList" value="${row.name || ''}" data-field="name" data-idx="${idx}" autocomplete="off" /></td>
                 <td><input class="form-control" value="${row.icon || ''}" data-field="icon" data-idx="${idx}" /></td>
                 <td><input class="form-control" value="${row.title || ''}" data-field="title" data-idx="${idx}" /></td>
                 <td><input class="form-control" value="${row.url || ''}" data-field="url" data-idx="${idx}" /></td>
                 <td><input class="form-control" value="${row.linkIcon || ''}" data-field="linkIcon" data-idx="${idx}" /></td>
                 <td><input class="form-control" value="${row.statusUrl || ''}" data-field="statusUrl" data-idx="${idx}" /></td>
                 <td><input class="form-control" value="${row.matchPhrase || ''}" data-field="matchPhrase" data-idx="${idx}" /></td>
-                <td>
-                    <button class="btn btn-primary btn-sm me-1 save-btn" onclick="saveRow(${idx})" id="saveBtn${idx}" title="Save"><i class="fa-solid fa-floppy-disk"></i></button>
+                <td class="d-flex gap-1 justify-content-center align-items-center p-1">
+                    <button class="btn btn-primary btn-sm save-btn" onclick="saveRow(${idx})" id="saveBtn${idx}" title="Save"><i class="fa-solid fa-floppy-disk"></i></button>
                     <button class="btn btn-danger btn-sm" onclick="deleteRow(${idx})" title="Delete"><i class="fa-solid fa-trash"></i></button>
                 </td>
             `;
                 tbody.appendChild(tr);
+                // Add datalist for folder names only once
+                if (!document.getElementById('folderNameList')) {
+                    const datalist = document.createElement('datalist');
+                    datalist.id = 'folderNameList';
+                    datalist.innerHTML = folderNameOptions;
+                    document.body.appendChild(datalist);
+                }
                 // Add change detection for inputs in this row
                 const inputs = tr.querySelectorAll('input');
                 const saveBtn = tr.querySelector('.save-btn');
@@ -100,16 +111,16 @@
             const idx = tbody.children.length;
             const tr = document.createElement('tr');
             tr.innerHTML = `
-            <td><input class="form-control" data-field="name" data-idx="${idx}" /></td>
+            <td><input class="form-control" data-field="name" data-idx="${idx}" list="folderNameList" autocomplete="off" /></td>
             <td><input class="form-control" data-field="icon" data-idx="${idx}" /></td>
             <td><input class="form-control" data-field="title" data-idx="${idx}" /></td>
             <td><input class="form-control" data-field="url" data-idx="${idx}" /></td>
             <td><input class="form-control" data-field="linkIcon" data-idx="${idx}" /></td>
             <td><input class="form-control" data-field="statusUrl" data-idx="${idx}" /></td>
             <td><input class="form-control" data-field="matchPhrase" data-idx="${idx}" /></td>
-            <td>
-                <button class="btn btn-success btn-sm me-1" onclick="addRow(this)">Add</button>
-                <button class="btn btn-secondary btn-sm" onclick="this.closest('tr').remove()">Cancel</button>
+            <td class="d-flex gap-1 justify-content-center align-items-center p-1">
+                <button class="btn btn-success btn-sm" onclick="addRow(this)" title="Add"><i class="fa-solid fa-plus"></i></button>
+                <button class="btn btn-secondary btn-sm" onclick="this.closest('tr').remove()" title="Cancel"><i class="fa-solid fa-xmark"></i></button>
             </td>
         `;
             tbody.appendChild(tr);
